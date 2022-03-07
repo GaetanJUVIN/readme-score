@@ -9,7 +9,7 @@ describe ReadmeScore::Document::Metrics do
         <p><a href="/other_thing.html">Other thing</a></p>
         <a href="http://google.com">Something there</a>}
       calc = ReadmeScore::Document::Metrics.new(html)
-      calc.number_of_links.should == 3
+      expect(calc.number_of_links).to eq(3)
     end
   end
 
@@ -37,7 +37,7 @@ describe ReadmeScore::Document::Metrics do
   <p>Pretty simple, right?</p>
       }
       calc = ReadmeScore::Document::Metrics.new(html)
-      calc.number_of_code_blocks.should == 2
+      expect(calc.number_of_code_blocks).to eq(2)
     end
   end
 
@@ -65,7 +65,7 @@ describe ReadmeScore::Document::Metrics do
   <p>Pretty simple, right?</p>
       }
       calc = ReadmeScore::Document::Metrics.new(html)
-      calc.code_block_to_paragraph_ratio.should == (2.0 / 3.0)
+      expect(calc.code_block_to_paragraph_ratio).to eq((2.0 / 3.0))
     end
   end
 
@@ -89,7 +89,7 @@ describe ReadmeScore::Document::Metrics do
 </ul>
       }
       calc = ReadmeScore::Document::Metrics.new(html)
-      calc.number_of_non_code_sections.should == 4
+      expect(calc.number_of_non_code_sections).to eq(4)
     end
   end
 end

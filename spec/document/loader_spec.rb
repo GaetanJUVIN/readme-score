@@ -3,27 +3,27 @@ require File.expand_path('../../spec_helper', __FILE__)
 describe ReadmeScore::Document::Loader do
   describe ".is_github_repo_slug?" do
     it "works" do
-      ReadmeScore::Document::Loader.is_github_repo_slug?("usepropeller/react.backbone").should == true
-      ReadmeScore::Document::Loader.is_github_repo_slug?("afnetworking/afnetworking").should == true
-      ReadmeScore::Document::Loader.is_github_repo_slug?("afnetworking/").should == false
-      ReadmeScore::Document::Loader.is_github_repo_slug?("afnetworking").should == false
-      ReadmeScore::Document::Loader.is_github_repo_slug?("http://github.com/afnetworking/afnetworking").should == false
-      ReadmeScore::Document::Loader.is_github_repo_slug?("afnetworking/afnetworking/").should == false
-      ReadmeScore::Document::Loader.is_github_repo_slug?("afnetworking/afnetworking/z").should == false
+      expect(ReadmeScore::Document::Loader.is_github_repo_slug?("usepropeller/react.backbone")).to eq(true)
+      expect(ReadmeScore::Document::Loader.is_github_repo_slug?("afnetworking/afnetworking")).to eq(true)
+      expect(ReadmeScore::Document::Loader.is_github_repo_slug?("afnetworking/")).to eq(false)
+      expect(ReadmeScore::Document::Loader.is_github_repo_slug?("afnetworking")).to eq(false)
+      expect(ReadmeScore::Document::Loader.is_github_repo_slug?("http://github.com/afnetworking/afnetworking")).to eq(false)
+      expect(ReadmeScore::Document::Loader.is_github_repo_slug?("afnetworking/afnetworking/")).to eq(false)
+      expect(ReadmeScore::Document::Loader.is_github_repo_slug?("afnetworking/afnetworking/z")).to eq(false)
     end
   end
 
   describe ".is_url?" do
     it "works" do
-      ReadmeScore::Document::Loader.is_url?("http://github.com/afnetworking/afnetworking").should == true
-      ReadmeScore::Document::Loader.is_url?("https://github.com/afnetworking/afnetworking").should == true
-      ReadmeScore::Document::Loader.is_url?("https://something.com/").should == true
-      ReadmeScore::Document::Loader.is_url?("usepropeller/react.backbone").should == false
-      ReadmeScore::Document::Loader.is_url?("afnetworking/afnetworking").should == false
-      ReadmeScore::Document::Loader.is_url?("afnetworking/").should == false
-      ReadmeScore::Document::Loader.is_url?("afnetworking").should == false
-      ReadmeScore::Document::Loader.is_url?("afnetworking/afnetworking/").should == false
-      ReadmeScore::Document::Loader.is_url?("afnetworking/afnetworking/z").should == false
+      expect(ReadmeScore::Document::Loader.is_url?("http://github.com/afnetworking/afnetworking")).to eq(true)
+      expect(ReadmeScore::Document::Loader.is_url?("https://github.com/afnetworking/afnetworking")).to eq(true)
+      expect(ReadmeScore::Document::Loader.is_url?("https://something.com/")).to eq(true)
+      expect(ReadmeScore::Document::Loader.is_url?("usepropeller/react.backbone")).to eq(false)
+      expect(ReadmeScore::Document::Loader.is_url?("afnetworking/afnetworking")).to eq(false)
+      expect(ReadmeScore::Document::Loader.is_url?("afnetworking/")).to eq(false)
+      expect(ReadmeScore::Document::Loader.is_url?("afnetworking")).to eq(false)
+      expect(ReadmeScore::Document::Loader.is_url?("afnetworking/afnetworking/")).to eq(false)
+      expect(ReadmeScore::Document::Loader.is_url?("afnetworking/afnetworking/z")).to eq(false)
     end
   end
 
@@ -36,7 +36,7 @@ describe ReadmeScore::Document::Loader do
 
           loader = ReadmeScore::Document::Loader.new(url)
           loader.load!
-          loader.markdown?.should == true
+          expect(loader.markdown?).to eq(true)
         end
       end
     }
@@ -47,7 +47,7 @@ describe ReadmeScore::Document::Loader do
         stub_request(:get, url)
 
         loader = ReadmeScore::Document::Loader.new(url)
-        loader.markdown?.should == false
+        expect(loader.markdown?).to eq(false)
       end
     end
   end
@@ -58,7 +58,7 @@ describe ReadmeScore::Document::Loader do
         loader = ReadmeScore::Document::Loader.new("http://something.com/thing.html")
         loader.markdown = false
         loader.response = double('HTTP response', body: "<h1>Hello</h1>")
-        loader.html.should == "<h1>Hello</h1>"
+        expect(loader.html).to eq("<h1>Hello</h1>")
       end
     end
 
@@ -99,7 +99,7 @@ describe ReadmeScore::Document::Loader do
 
         loader = ReadmeScore::Document::Loader.new(url)
         loader.load!
-        loader.html.strip.should == "<h1>This is a test</h1>"
+        expect(loader.html.strip).to eq("<h1>This is a test</h1>")
       end
     end
 
@@ -115,11 +115,10 @@ describe ReadmeScore::Document::Loader do
 
               loader = ReadmeScore::Document::Loader.new(repo_url)
               loader.load!
-              loader.html.strip.should == "<h1>This is a hit</h1>"
+              expect(loader.html.strip).to eq("<h1>This is a hit</h1>")
             end
           }
         }
-
       end
 
       describe "with link to some other page" do
@@ -130,7 +129,7 @@ describe ReadmeScore::Document::Loader do
 
           loader = ReadmeScore::Document::Loader.new(url)
           loader.load!
-          loader.html.strip.should == "<h1>A markdown</h1>"
+          expect(loader.html.strip).to eq("<h1>A markdown</h1>")
         end
       end
     end

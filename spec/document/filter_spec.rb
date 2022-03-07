@@ -10,7 +10,7 @@ describe ReadmeScore::Document::Filter do
           <p>Some info about the license here</p>
           <p>More info</p>}
         filter = ReadmeScore::Document::Filter.new(html)
-        filter.filtered_html!.strip.empty?.should == true
+        expect(filter.filtered_html!.strip.empty?).to eq(true)
       end
 
       it "works and preserves other elements" do
@@ -24,11 +24,11 @@ describe ReadmeScore::Document::Filter do
           <p>Hello</p>}
         filter = ReadmeScore::Document::Filter.new(html)
         string = filter.filtered_html!
-        string.should == %Q{
+        expect(string).to eq(%Q{
           <h2>Other thing</h2>
           <p>Something</p>
           <h2>Something else</h2>
-          <p>Hello</p>}
+          <p>Hello</p>})
       end
 
       it "works with lesser headings afterwards" do
@@ -40,7 +40,7 @@ describe ReadmeScore::Document::Filter do
           <p>Hello</p>}
         filter = ReadmeScore::Document::Filter.new(html)
         string = filter.filtered_html!
-        string.strip.should == ""
+        expect(string.strip).to eq("")
       end
     end
 
@@ -51,7 +51,7 @@ describe ReadmeScore::Document::Filter do
           <p>Some info about the contact here</p>
           <p>More info</p>}
         filter = ReadmeScore::Document::Filter.new(html)
-        filter.filtered_html!.strip.empty?.should == true
+        expect(filter.filtered_html!.strip.empty?).to eq(true)
       end
 
       it "works and preserves other elements" do
@@ -65,11 +65,11 @@ describe ReadmeScore::Document::Filter do
           <p>Hello</p>}
         filter = ReadmeScore::Document::Filter.new(html)
         string = filter.filtered_html!
-        string.should == %Q{
+        expect(string).to eq(%Q{
           <h2>Other thing</h2>
           <p>Something</p>
           <h2>Something else</h2>
-          <p>Hello</p>}
+          <p>Hello</p>})
       end
 
       it "works with lesser headings afterwards" do
@@ -81,7 +81,7 @@ describe ReadmeScore::Document::Filter do
           <p>Hello</p>}
         filter = ReadmeScore::Document::Filter.new(html)
         string = filter.filtered_html!
-        string.strip.should == ""
+        expect(string.strip).to eq("")
       end
     end
 
@@ -92,9 +92,9 @@ describe ReadmeScore::Document::Filter do
         }.strip
         filter = ReadmeScore::Document::Filter.new(html)
         string = filter.filtered_html!
-        string.strip.should == %Q{
+        expect(string.strip).to eq(%Q{
           <h2>Repo</h2><p>Hello</p>
-          }.strip
+          }.strip)
       end
 
       it "keeps non-image links" do
@@ -103,7 +103,7 @@ describe ReadmeScore::Document::Filter do
         }.strip
         filter = ReadmeScore::Document::Filter.new(html)
         string = filter.filtered_html!
-        string.strip.should == html
+        expect(string.strip).to eq(html)
       end
     end
 

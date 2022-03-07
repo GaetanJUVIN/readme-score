@@ -4,9 +4,10 @@ describe ReadmeScore do
   describe ".use_github_api?" do
     it "changes after setting" do
       ReadmeScore.use_github_api = false
-      ReadmeScore.use_github_api?.should == false
+      expect(ReadmeScore.use_github_api?).to eq(false)
+
       ReadmeScore.use_github_api = true
-      ReadmeScore.use_github_api?.should == true
+      expect(ReadmeScore.use_github_api?).to eq(true)
     end
   end
 
