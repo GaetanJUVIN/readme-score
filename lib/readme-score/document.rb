@@ -1,6 +1,5 @@
 require 'readme-score/document/filter'
 require 'readme-score/document/metrics'
-require 'readme-score/document/loader'
 require 'readme-score/document/parser'
 require 'readme-score/document/score'
 
@@ -8,10 +7,8 @@ module ReadmeScore
   class Document
     attr_accessor :html, :filter, :metrics
 
-    def self.load(url)
-      loader = Loader.new(url)
-      loader.load!
-      new(loader.html)
+    def self.load(content)
+      new(Document::Parser.new(content).to_html)
     end
 
     def initialize(html)

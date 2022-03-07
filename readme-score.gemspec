@@ -6,10 +6,10 @@ require 'readme-score/version'
 Gem::Specification.new do |spec|
   spec.name          = "readme-score"
   spec.version       = ReadmeScore::VERSION
-  spec.authors       = ["Clay Allsopp"]
-  spec.email         = ["clay.allsopp@gmail.com"]
+  spec.authors       = ["Gaetan Juvin"]
+  spec.email         = ["gaetan@juvin.fr"]
   spec.summary       = "Gives a score for README.md"
-  spec.homepage      = "https://github.com/clayallsopp/readme-score"
+  spec.homepage      = ""
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -19,7 +19,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "nokogiri", ">= 1.13.0"
   spec.add_dependency "redcarpet", ">= 3.5.1"
-  spec.add_dependency "octokit", ">= 3.2.0"
 
   spec.add_development_dependency "bundler", "~> 2.1"
   spec.add_development_dependency "rspec"

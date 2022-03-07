@@ -6,6 +6,7 @@ module ReadmeScore
       ]
       def initialize(noko_or_html)
         @noko = Util.to_noko(noko_or_html)
+        @noko
       end
 
       def cumulative_code_block_length
@@ -22,6 +23,54 @@ module ReadmeScore
 
       def number_of_paragraphs
         all_paragraphs.length
+      end
+
+      def qwasar_reference?
+        all_links.any? do |a|
+          a['href'].downcase.index('https://qwasar.io')
+        end
+      end
+
+      def is_it_a_paragraph?(node)
+        node.name == 'p'
+      end
+
+      def has_it_been_filled?(node)
+        node.text.size > 30 and node.text.index('TODO -') == nil
+      end
+
+      def eval_section(named)
+        section = all_h2_title.select { |aht| aht.text == named }.first
+
+        if section
+          next_block = section.next_element
+          if next_block == nil
+            return false
+          elsif is_it_a_paragraph?(next_block) == false
+            return false
+          elsif has_it_been_filled?(next_block) == false
+            return false
+          end
+          true
+        else
+          false
+        end
+      end
+
+      def task_section
+        eval_section('Task')
+      end
+
+      def description_section
+        eval_section('Description')
+      end
+
+      def installation_section
+        eval_section('Installation')
+      end
+
+      def usage_section
+        eval_section('Usage')
       end
 
       def number_of_non_code_sections
@@ -87,6 +136,11 @@ module ReadmeScore
         def all_paragraphs
           @noko.search('p')
         end
+
+        def all_h2_title
+          @noko.search('h2')
+        end
+
 
         def all_lists
           @noko.search('ol') + @noko.search('ul')
