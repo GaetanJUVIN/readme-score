@@ -46,8 +46,6 @@ module ReadmeScore
           next_block = section.next_element
           if next_block == nil
             return false
-          elsif is_it_a_paragraph?(next_block) == false
-            return false
           elsif has_it_been_filled?(next_block) == false
             return false
           end
