@@ -53,7 +53,7 @@ module ReadmeScore
             metric_score_value = metrics.send(metric_option.metric) ? metric_option.value : 0
           end
           if as_description
-            breakdown[metric_option.description] = [metric_score_value, metric_option.max || metric_option.value]
+            breakdown[metric_option.description] = {score: metric_score_value, text: @metrics.text(metric_option.metric), tips: @metrics.tips(metric_option.metric).join("\n")}
           else
             breakdown[metric_name] = metric_score_value
           end

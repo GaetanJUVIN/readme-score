@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    readme-score (0.0.4)
+    readme-score (0.0.5)
       nokogiri (>= 1.13.0)
       redcarpet (>= 3.5.1)
 
@@ -15,7 +15,7 @@ GEM
     diff-lcs (1.5.0)
     dotenv (2.7.6)
     hashdiff (1.0.1)
-    nokogiri (1.13.3-x86_64-darwin)
+    nokogiri (1.13.8-x86_64-darwin)
       racc (~> 1.4)
     public_suffix (4.0.6)
     racc (1.6.0)

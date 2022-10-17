@@ -5,6 +5,9 @@ module ReadmeScore
         :cumulative_code_block_length
       ]
       def initialize(noko_or_html)
+        @tips = Hash.new { |h, k| h[k] = [] }
+        @texts = Hash.new { |h, k| h[k] = [] }
+
         @noko = Util.to_noko(noko_or_html)
         @noko
       end
@@ -34,19 +37,42 @@ module ReadmeScore
       def is_it_a_paragraph?(node)
         node.name == 'p'
       end
+      
+      def todo_removed?(node)
+        node.text.index('TODO -') == nil
+      end
+      
+      def demo_usage_removed?(node)
+        node.text.index('./my_project argument1 argument2') == nil
+      end
 
       def has_it_been_filled?(node)
-        node.text.size > 30 and node.text.index('TODO -') == nil
+        node.text.size > 30
+      end
+      
+      def get_section(named)
+        all_h2_title.select { |aht| aht.text == named }.first
       end
 
       def eval_section(named)
-        section = all_h2_title.select { |aht| aht.text == named }.first
+        section = get_section(named)
 
         if section
           next_block = section.next_element
+          @texts[named] = next_block == nil ? "" : next_block.text
           if next_block == nil
+            @tips[named] << "#{named} not found. Make sure it respects this syntax: `## #{named}`"
             return false
           elsif has_it_been_filled?(next_block) == false
+            @tips[named] << "We found only #{next_block.text.size} characters. Come on you can do a little more than that."
+            return false
+          end
+          if todo_removed?(next_block) == false
+            @tips[named] << "Once completed `TODO` needs to be removed. It refers to something that has to be done. Since you've filled the section, it's done. See more references to other tags. (https://en.wikipedia.org/wiki/Comment_(computer_programming)#Tags)"
+            return false
+          end
+          if demo_usage_removed?(next_block) == false
+            @tips[named] << "Default ./my_project is still present. Describe how can we run your project?"
             return false
           end
           true
@@ -71,6 +97,14 @@ module ReadmeScore
         eval_section('Usage')
       end
 
+      def text(named)
+        @texts[named.to_s.gsub('_section', '').capitalize]
+      end
+      
+      def tips(named)
+        @tips[named.to_s.gsub('_section', '').capitalize]
+      end
+      
       def number_of_non_code_sections
         (all_paragraphs + all_lists).length
       end
